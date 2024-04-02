@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+        <style>
+            body {
+        font-size:1.5em;
+      }
+      .button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+}
+input[type=text] {
+  width: 30%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  font-size: 20px;
+  letter-spacing: .5rem;
+}
+#lotteryNumbers {
+  width:650px;
+  margin-top:20px;
+  font-size: 50px;
+  border: 2px solid red;
+  border-radius: 5px;
+  padding:5px;
+  font-weight: bold;
+}
+
+    </style>
+    <title>Lottery Game</title>
+  </head>
+  <body>
+    <h1>Lottery Game</h1>
+    <p>Match the lottery numbers to your tickets and win points!</p>
+
+    <h2>Your Tickets</h2>
+<form>
+  <label for="ticket1">Ticket 1:</label>
+  <input type="text" id="ticket1" name="ticket1" class="ticket-input" placeholder="1,2,3" maxlength="5" pattern="\d{1},\d{1},\d{1}" required><br>
+
+  <label for="ticket2">Ticket 2:</label>
+  <input type="text" id="ticket2" name="ticket2" class="ticket-input" placeholder="1,2,3" maxlength="5" pattern="\d{1},\d{1},\d{1}" required><br>
+
+  <label for="ticket3">Ticket 3:</label>
+  <input type="text" id="ticket3" name="ticket3" class="ticket-input" placeholder="1,2,3" maxlength="5" pattern="\d{1},\d{1},\d{1}" required><br>
+
+  <label for="ticket4">Ticket 4:</label>
+  <input type="text" id="ticket4" name="ticket4" class="ticket-input" placeholder="1,2,3" maxlength="5" pattern="\d{1},\d{1},\d{1}" required><br>
+
+  <label for="ticket5">Ticket 5:</label>
+  <input type="text" id="ticket5" name="ticket5" class="ticket-input" placeholder="1,2,3" maxlength="5" pattern="\d{1},\d{1},\d{1}" required><br>
+
+  <label for="ticket6">Ticket 6:</label>
+  <input type="text" id="ticket6" name="ticket6" class="ticket-input" placeholder="1,2,3" maxlength="5" pattern="\d{1},\d{1},\d{1}" required><br>
+
+  <label for="ticket7">Ticket 7:</label>
+  <input type="text" id="ticket7" name="ticket7" class="ticket-input" placeholder="1,2,3" maxlength="5" pattern="\d{1},\d{1},\d{1}" required><br>
+
+  <button class="button" type="button" id="fillTicketsButton">Quic Pic</button>
+  <button class="button" type="button" id="playButton">Play</button>
+  <button class="button" type="button" id="playAgainButton">Play Again</button>
+</form>
+
+<div id="lotteryNumbers">Lottery Numbers:  (click Play)</div>
+    
+    <h2>Amount spent on tickets</h2>
+    <div id="ticketCost">Total spend: 0 points</div>
+
+    <h2>Winnings</h2>
+    <div id="points">Total winnings: 0 points</div>
+    <div id="pointsNet">Total profit: 0 points</div>
+    <div id="pointsCurrent">Weekly winnings: 0 points</div>
+    <div id="pointsCurrentNet">Weekly profit: 0 points</div>
+    <div id="maxWeeklyProfit">Maximum weekly profit: 0 points</div>
+    <div id="maxWeeklyLoss">Maximum weekly loss: 0 points</div>
+
+    <script>
+        let ticketSpend = 0;
+        let totalPoints = 0;
+        let maxWeekProfit=0;
+        let maxWeekLoss = 0;
+        let weekProfit = 0;
+        let totalProfit = 0;
+        let weekWin = 0;
+      // Check the tickets and award points
+      function checkTickets() {
+        // Generate the lottery numbers
+        const lotteryNumbers = generateLotteryNumbers();
+        document.getElementById("lotteryNumbers").innerHTML = "Lottery Numbers: " + lotteryNumbers.join(", ");
+
+        let points = 0;
+        const tickets = [
+          document.getElementById("ticket1").value.split(",").map(x => parseInt(x.trim())),
+          document.getElementById("ticket2").value.split(",").map(x => parseInt(x.trim())),
+          document.getElementById("ticket3").value.split(",").map(x => parseInt(x.trim())),
+          document.getElementById("ticket4").value.split(",").map(x => parseInt(x.trim())),
+          document.getElementById("ticket5").value.split(",").map(x => parseInt(x.trim())),
+          document.getElementById("ticket6").value.split(",").map(x => parseInt(x.trim())),
+          document.getElementById("ticket7").value.split(",").map(x => parseInt(x.trim()))
+        ];
+        for (const ticket of tickets) {
+          const numMatches = countMatches(ticket, lotteryNumbers);
+          if (numMatches === 3) {
+            points += 9;
+          } else if (numMatches === 2) {
+            points += 3;
+          }
+        }
+        totalPoints += points;
+        ticketSpend+=7;
+        document.getElementById("points").innerHTML = "Total winnings: " + totalPoints + " points";
+        document.getElementById("ticketCost").innerHTML = "Total spend: " + ticketSpend + " points";
+        totalProfit = totalPoints - ticketSpend;
+        document.getElementById("pointsNet").innerHTML = "Total profit: " + totalProfit + " points";
+        document.getElementById("pointsCurrent").innerHTML = "Weekly winnings: " + points + " points";
+        weekProfit = points - 7;
+        document.getElementById("pointsCurrentNet").innerHTML = "Weekly profit: " + weekProfit + " points";
+        
+        if (points -7 > maxWeekProfit){
+            maxWeekProfit = points-7;
+            document.getElementById("maxWeeklyProfit").innerHTML = "Maximum weekly profit: " + maxWeekProfit + " points";
+        }
+        if (7-points > maxWeekLoss){
+            maxWeekLoss = 7-points;
+            document.getElementById("maxWeeklyLoss").innerHTML = "Maximum weekly loss: " + maxWeekLoss + " points";
+        }
+      }
+
+      // Generate the lottery numbers
+      function generateLotteryNumbers() {
+        const lotteryNumbers = [];
+        while (lotteryNumbers.length < 3) {
+          const num = Math.floor(Math.random() * 7) + 1;
+          if (!lotteryNumbers.includes(num)) {
+            lotteryNumbers.push(num);
+          }
+        }
+        return lotteryNumbers.sort();
+      }
+      
+      function playAgain() {
+
+        // Generate new lottery numbers
+        const lotteryNumbers = generateLotteryNumbers();
+        document.getElementById("lotteryNumbers").innerHTML = "Lottery Numbers: " + lotteryNumbers.join(", ");
+
+        // Check tickets and update score
+        let points = 0;
+        const tickets = [
+          document.getElementById("ticket1").value.split(",").map(x => parseInt(x.trim())),
+          document.getElementById("ticket2").value.split(",").map(x => parseInt(x.trim())),
+          document.getElementById("ticket3").value.split(",").map(x => parseInt(x.trim())),
+          document.getElementById("ticket4").value.split(",").map(x => parseInt(x.trim())),
+          document.getElementById("ticket5").value.split(",").map(x => parseInt(x.trim())),
+          document.getElementById("ticket6").value.split(",").map(x => parseInt(x.trim())),
+          document.getElementById("ticket7").value.split(",").map(x => parseInt(x.trim()))
+        ];
+        for (const ticket of tickets) {
+          const numMatches = countMatches(ticket, lotteryNumbers);
+          if (numMatches === 3) {
+            points += 9;
+          } else if (numMatches === 2) {
+            points += 3;
+          }
+        }
+        totalPoints += points;
+        ticketSpend+=7;
+        document.getElementById("points").innerHTML = "Total winnings: " + totalPoints + " points";
+        document.getElementById("ticketCost").innerHTML = "Total spend: " + ticketSpend + " points";
+        totalProfit = totalPoints - ticketSpend;
+        document.getElementById("pointsNet").innerHTML = "Total profit: " + totalProfit + " points";
+        document.getElementById("pointsCurrent").innerHTML = "Weekly winnings: " + points + " points";
+        weekProfit = points - 7;
+        document.getElementById("pointsCurrentNet").innerHTML = "Weekly profit: " + weekProfit + " points";
+        
+        if (points -7 > maxWeekProfit){
+            maxWeekProfit = points-7;
+            document.getElementById("maxWeeklyProfit").innerHTML = "Maximum weekly profit: " + maxWeekProfit + " points";
+        }
+        if (7-points > maxWeekLoss){
+            maxWeekLoss = 7-points;
+            document.getElementById("maxWeeklyLoss").innerHTML = "Maximum weekly loss: " + maxWeekLoss + " points";
+        }
+      }
+
+      // Count the number of matches between a ticket and the lottery numbers
+      function countMatches(ticket, lotteryNumbers) {
+        let count = 0;
+        for (const num of ticket) {
+          if (lotteryNumbers.includes(num)) {
+            count++;
+          }
+        }
+        return count;
+      }
+      
+      $(document).ready(function() {
+        // Validate ticket inputs
+        $('.ticket-input').on('input', function() {
+          const value = $(this).val();
+          if (value && !/^\d{1},\d{1},\d{1}$/.test(value.trim())) {
+            $(this).addClass('invalid');
+          } else {
+            $(this).removeClass('invalid');
+          }
+        });
+
+        // Play button event listener
+        $('#playButton').click(function() {
+          if ($('.ticket-input.invalid').length > 0) {
+            alert("Each ticket must have exactly three numbers, separated by commas.");
+            return;
+          }
+          checkTickets();
+        });
+
+        // Play again button event listener
+        $('#playAgainButton').click(function() {
+            if ($('.ticket-input.invalid').length > 0) {
+              alert("Each ticket must have exactly three numbers, separated by commas.");
+              return;
+            }
+          playAgain();
+        });
+      });
+      // Generate random ticket numbers
+function generateRandomTicket() {
+  const ticket = [];
+  while (ticket.length < 3) {
+    const num = Math.floor(Math.random() * 7) + 1;
+    if (!ticket.includes(num)) {
+      ticket.push(num);
+    }
+  }
+  return ticket;
+}
+
+// Fill lottery tickets with random numbers
+function fillLotteryTickets() {
+  for (let i = 1; i <= 7; i++) {
+    const ticketInput = document.getElementById(`ticket${i}`);
+    const ticket = generateRandomTicket();
+    ticketInput.value = ticket.join(",");
+  }
+}
+
+// Add event listener to "Fill Tickets" button
+document.getElementById("fillTicketsButton").addEventListener("click", function() {
+  fillLotteryTickets();
+});
+    </script>
+</body>
+</html>

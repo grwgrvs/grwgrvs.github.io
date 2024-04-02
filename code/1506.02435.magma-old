@@ -1,0 +1,379 @@
+//Code to accompany the paper arXiv:1506.02435
+// This code is used to construct Table 1 of the paper
+// To generate Table 1, use the function makeTable()
+
+//input: 	n (number of vertices) 
+//return 	the set of multiplcities that satisifes the Bell-Rowlnson bound (Theorem 2.7)
+getmSet:=function(n)
+	return [i : i in [1..n-2] | (n-i)*((n-i)+1) ge 2*n and (1+i)*(2+i) ge 2*n];
+end function;
+
+//input: 	t (smallest eigenvalue -t)
+//return: 	list of spectral parameter arrays 
+getFeasibleSpectra:=function(t)
+	params:=[];
+	lbnd:=Ceiling((t-1/2)^2/2);
+	
+	if t le 10 then
+		ubnd:=Floor(t^2+8*t+18+18/(t-1));
+	else
+		ubnd:=Minimum(Floor(t^2/4+17*t/2+48+116/(t-1)),Floor(t^2+8*t+18+18/(t-1)));
+	end if;
+	for n in [lbnd..ubnd] do
+		for m in getmSet(n) do
+			s:=1-n+m*(t+1);
+			if n ge s^2+1 then //Van Dam-Kooij bound (Lemma 2.6)
+				continue;
+			end if;
+			if s gt (t+1)^2+t-1 then // s is at most the largest valency
+				continue;
+			end if;
+			if s gt n-6 then // See [4, Lemma 2.13] (can remove this)
+				continue;
+			end if;
+			if s le t then  //s is the largest eigenvalue and we assume non-bipartite
+				continue;
+			end if;
+			if (s^2 + n-1-m + m*t^2) ge n*s then //Van Dam-Kooij bound (average degree) [4, Lemma 2.7]  (can remove this)
+				continue;
+			end if;
+			if (s^2 + n-1-m + m*t^2) mod 2 ne 0 then //sum of squares even (2* number of edges)
+				continue;
+			end if;
+			if (s^3 + n-1-m - m*t^3) mod 6 ne 0 then //sum of cubes give 6* number of triangles
+				continue;
+			end if;
+			Append(~params,<t,n,m,s>);
+		end for;
+	end for;
+	return params;
+end function;
+
+//input: 	ks (valencies)
+//			t (smallest eigenvalue -t)
+//			n (number of vertices)
+//			m (multiplicity of -t)
+//			s (largest eigenvalue)
+//return: 	whether or not the valencies ks are an (n,s,m)-feasible valency set 
+testKs:=function(ks,t,n,m,s)
+	check:=false;
+	check2:=false;
+	km, im := Maximum(ks);
+	if km le s then
+		return false; //Van Dam-Kooij bound (Lemma 2.6)
+	end if;
+	if Minimum(ks) ge s then 
+		return false; //Van Dam-Kooij bound (Lemma 2.6)
+	end if;
+	am, bm :=SquareFree(km-t);
+	for i in [1..#ks] do
+		ai, bi :=SquareFree(ks[i]-t);
+		for j in [i..#ks] do        //\alpha_j => \alpha_i 
+			aj, bj:=SquareFree(ks[j]-t);
+			if bj lt bi then
+				print "ks ordering problem";
+			end if;
+			// since G is connected prop 4.6 inequality must hold for some pair of valencies
+			// if j lt #ks then
+				if ai*(bi^2+bj^2-bi*bj) + 3*t - 1 ge n-2*m then
+					check:=true;
+				end if;
+			// end if;
+		end for;
+		if ks[i] lt km then
+			lhss:=am*bi*bm-(ks[i]-t);
+			if lhss le t then // checks that some vertex is not necessarily adjacent to a vertex of maximal valency
+				check2:=true;
+			end if;
+		end if;
+	end for;
+	if not check then
+		return false;
+	end if;
+	if not check2 then
+		return false;
+	end if;
+	nDV:=#ks;
+	kmin:=ks[1];
+	kmax:=ks[nDV];
+	kmax2:=ks[nDV-1];
+	traceSq:=s^2 + n-1-m + m*t^2; 
+	nmaxubound:=Floor((traceSq-n*kmin-&+[(ks[i]-kmin): i in [1..nDV-1]])/(kmax-kmin));
+	nmaxlbound:=Floor((traceSq-n*kmax2-&+[(ks[i]-kmax2): i in [1..nDV-1]])/(kmax-kmax2));
+	if nmaxubound lt 1 then
+		return false;
+	end if;
+	return true;
+end function;
+
+//input: 	ns (valency multiplicities)
+//			ks (valencies)
+//			n (number of vertices)
+//			m (multiplicity of -t)
+//			t (smallest eigenvalue = -t)
+//			l1 (second largest eigenvalue)
+//			based on the valencies checks for a large independent set
+//return: 	true if the independent set has cardinality at most m, false otherwise
+checkIndependentSets:=function(ns,ks,n,m,t,l1)
+	indepSetSize:=0;
+	check:=false;
+	for i in [1..#ks] do
+		ai, bi :=SquareFree(ks[i]-l1*t);
+		for j in [1..i] do        //\alpha_j > \alpha_i
+			aj, bj:=SquareFree(ks[j]-l1*t);
+			if ai*(bi^2+bj^2-bi*bj) + 3*t - 1 ge n-2*m then
+				check:=true;
+				break;
+			end if;
+		end for;
+		if check then
+			break;
+		end if;
+		indepSetSize+:=ns[i];
+	end for;
+	return indepSetSize le m;
+end function;
+
+//input: 	ns (valency multiplicities)
+//			ks (valencies)
+//			n (number of vertices)
+//			m (multiplicity of -t)
+//			t (smallest eigenvalue = -t)
+//			s (largest eigenvalue)
+//			l1 (second largest eigenvalue)
+//			test the conditions that the valency multiplicities must satitisfy
+//return: 	true if the valecency multiplicities satisfy certain conditions
+testNs:=function(ns,ks,n,m,t,s,l1)
+	lhs2:=s^2 + (n-1-m)*l1^2 + m*t^2;
+	rhs2:=&+[ ns[i]*ks[i] : i in [1..#ns]];
+	if lhs2 ne rhs2 then
+		return false;
+	end if;
+	
+	lhs3:=s^3 + (n-1-m)*l1^3 - m*t^3;
+	rhs3:=&+[ns[i]*((s-t+l1)*(ks[i]-l1*t)-(t-l1)*l1*t): i in [1..#ns]];
+	if lhs3 ne rhs3 then
+		return false;
+	end if;
+	
+	bs:=[];
+	for i in [1..#ks] do
+		a,b:=SquareFree(ks[i]-l1*t);
+		Append(~bs,b);
+		irr:=a;
+	end for;
+	if &+[ns[j]*(ks[j]-s)*bs[j] : j in [1..#ks]] ne 0 then
+		return false;
+	end if;
+	if irr*(&+[ns[j]*bs[j] : j in [1..#ks]])^2 ne &+[ns[j]*(ks[j]-l1)*(ks[j]+t) : j in [1..#ks]] then
+		return false;
+	end if;
+	if not checkIndependentSets(ns,ks,n,m,t,l1) then
+		return false;
+	end if;
+	
+	return true;
+end function;
+
+//input: 	posKs (feasible valencies)
+//			k (valency)
+//			t (smallest eigenvalue = -t)
+//			n (number of vertices)
+//			m (multiplicity of -t)
+//return: 	subset of posKs of valencies that are compatible with the valency k
+getCompatibleValencies:=function(posKs,k,t,n,m)
+	aprev, bprev := SquareFree((k-t));
+	compatS:=[];
+	for j in posKs do
+		if j le k then
+			continue;
+		end if;
+		a, b := SquareFree((j-t));
+		if aprev ne a then  // ensures that \alpha_i\alpha_j is an integer
+			continue;
+		end if;
+		lhs:=a*bprev*b-(k-t);
+		if lhs gt 2*t-2 then  // ensures that \alpha_i(\alpha_j - \alpha_i) <= 2t-2
+			continue;
+		end if;
+		if lhs gt t then // if \alpha_i(\alpha_j - \alpha_i) > t then check prop 4.6
+			if a*(bprev^2+b^2-bprev*b) +3*t - 1 lt n-2*m then
+				continue;
+			end if;
+		end if;
+		Append(~compatS,j);
+	end for;
+	return compatS;
+end function;
+
+//input: 	posKs (feasible valencies)
+//			Pks (starting set of valencies)
+//			prm (parameters <t,n,m,s>)
+//			this function is recursive
+//return: 	Set of all possible feasible valency sets that contain Pks
+getForPksFeasibleValencies:=function(posKs,Pks,prm)
+	ntc:=[];
+	t:=prm[1];
+	n:=prm[2];
+	m:=prm[3];
+	s:=prm[4];
+	if #posKs gt 0 then
+		for k in posKs do
+			cpK:=getCompatibleValencies(posKs,k,t,n,m);
+			ntc:=ntc cat $$(cpK,Pks cat [k],prm);
+		end for;
+	end if;
+	if #Pks gt 1 then
+		if testKs(Pks,t,n,m,s) then
+			ntc:=ntc cat [Pks];
+		end if;
+	end if;
+	return ntc;
+end function;
+
+//input: 	Rks (remaining valencies to deal with)
+//			Pns (starting set of valency multiplicities)
+//			ks (set of valencies)
+//			kmin (minimum valency)
+//			traceSqM (sum of the squares of the eigenvalues)
+//			Rn (remaining number of vertices with unassigned valency)
+//			prm (parameters <t,n,m,s>)
+//			this function is recursive
+//return: 	Set of all possible feasible valency multiplicity sets for a certain set of valencies
+getForksFeasibleMultiplicities:=function(Rks,Pns,ks,kmin,traceSqM,Rn,prm)
+	nDV:=#Rks;
+	if nDV eq 1 then
+		t:=prm[1];
+		n:=prm[2];
+		m:=prm[3];
+		s:=prm[4];
+		ns:=[Rn] cat Pns;
+		if testNs(ns,ks,n,m,t,s,1) then
+			return [<prm,<ns,ks>>];
+		else
+			return [];
+		end if;
+	else
+		kmax:=Rks[nDV];
+		kmax2:=Rks[nDV-1];
+		nmaxubound:=Floor((traceSqM-Rn*kmin-&+[(Rks[i]-kmin): i in [1..nDV-1]])/(kmax-kmin));
+		nmaxlbound:=Ceiling((traceSqM-Rn*kmax2-&+[(Rks[i]-kmax2): i in [1..nDV-1]])/(kmax-kmax2));
+		ntc:=[];
+		for ni in [Maximum(nmaxlbound,1)..Minimum(nmaxubound,Rn-nDV-1)] do
+			newPns:=[ni] cat Pns;
+			newRks:=[Rks[i] : i in [1..nDV-1] ];
+			newtraceSqM:=traceSqM-ni*kmax;
+			newRn:=Rn-ni;
+			cm:=$$(newRks,newPns,ks,kmin,newtraceSqM,newRn,prm);
+			if #cm ne 0 then
+				ntc:=ntc cat cm;
+			end if;
+		end for;
+		return ntc;
+	end if;
+end function;
+
+//input: 	prm (parameters <t,n,m,s>)
+//return: 	Set of all possible feasible valency sets
+getFeasibleValencies:=function(prm)
+	t:=prm[1];
+	n:=prm[2];
+	m:=prm[3];
+	s:=prm[4];
+	lowVal:=t+1;
+	feasVals:={};
+	if t ge 7 then
+		lowVal:=t+2;
+	end if;
+	if t ge 11 then
+		lowVal:=t+3;
+	end if;
+	uppVal:=Minimum(n-2,t^2+3*t+1);
+	S:=[];
+	for j in [lowVal..uppVal] do
+		cw:=(s-t+1)*(j-t)-(t-1)*t;  //Number of closed three walks
+		if cw lt 0 then
+			continue;
+		end if;
+		if cw mod 2 eq 1 then
+			continue;
+		end if;
+		Append(~S,j);
+	end for;
+	for k in S do
+		if k ge s then //start with the smallest valency, which is less than s by Van Dam-Kooij bound
+			continue;
+		end if;
+		cpK:=getCompatibleValencies(S,k,t,n,m);
+		for vals in getForPksFeasibleValencies(cpK,[k],<t,n,m,s>) do
+			if #vals lt 3 then  //only interested in at least 3 distinct valencies
+				continue;
+			end if;
+			Include(~feasVals,vals);
+		end for;
+	end for;
+	
+	return feasVals;
+end function;
+
+//input: 	P (set of pairs <p, fV>, where
+//						p (parameters <t,n,m,s>)
+//						fV (set of valencies)
+//				)
+//return: 	sets of the form <prm,<ns,ks>> of parameters, valencies and corresponding
+//			multiplicities that satisfy all feasibility conditions
+getFeasibleMultiplicities:=function(P)
+	needToCheck:=[];
+	for ind in [1..#P] do
+		prms:=P[ind];
+		prm := prms[1];
+		fV:=SetToSequence(prms[2]);
+		t:=prm[1];
+		n:=prm[2];
+		m:=prm[3];
+		s:=prm[4];
+		fVtot:=#fV;
+		for ksind in [1..#fV] do
+			ks:=fV[ksind];
+			kmin:=ks[1];
+			traceSq:=s^2 + n-1-m + m*t^2;
+			needToCheck:=needToCheck cat getForksFeasibleMultiplicities(ks,[],ks,kmin,traceSq,n,prm);
+		end for;
+	end for;
+	return needToCheck;	
+end function;
+
+//input: 	t (corresponding to smallest eigenvalue -t)
+//return: 	set of pairs <p,fV>
+//						p (<t,n,m,s>)
+//						fV (set of feasible valencies for parameters p)
+getFortFeasibleValencies:=function(t)
+	PP:=getFeasibleSpectra(t);
+	P:=[];
+	for p in PP do
+		fV:=getFeasibleValencies(p);
+		if fV ne {} then
+			Append(~P,<p, fV>);
+		end if;
+	end for;
+	return P;
+end function;
+
+//Produces Table 1
+makeTable:=procedure()
+	for t in [3..29] do
+		l:=getFortFeasibleValencies(t);
+		ntc:=getFeasibleMultiplicities(l);
+		printf "%o & %o & %o & %o\n", t, #getFeasibleSpectra(t), #l, #ntc; 
+	end for;
+end procedure;
+
+//Produces the first two columns of Table 1 (this function runs faster than makeTable())
+makeTable2:=procedure()
+	for t in [3..29] do
+		l:=getFortFeasibleValencies(t);
+		printf "%o & %o & %o\n", t, #getFeasibleSpectra(t), #l; 
+	end for;
+end procedure;
+
+	

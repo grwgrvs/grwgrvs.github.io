@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sperner Triangle</title>
+    <style>
+
+        svg {
+        width: 1000px;
+        height: auto;
+      }
+
+      .circle {
+        fill: white;
+        stroke: black;
+        stroke-width: 1;
+        transition: fill 0.5s;
+      }
+    .circlef {
+        fill: white;
+        stroke: black;
+        stroke-width: 1;
+        transition: fill 0.5s;
+      }
+
+      .circle:hover {
+        stroke: gray;
+        cursor: pointer;
+      }
+.line {
+  stroke: black;
+  stroke-width: 1px;
+}
+
+a, a:active, a:focus {
+outline: none;
+}
+
+a:hover{color:#333;text-decoration:none;}
+
+
+        #palette {
+            vertical-align: top;
+            display: inline-block;
+        }
+    
+
+#red {
+  display:inline-block;
+  underline:0;
+}
+#blue {
+  display:inline-block;
+}
+#yellow {
+  display:inline-block;
+}
+
+#palette a {display:inline-block; text-decoration:none; font-size:1.5em; color:#fff;font-weight:bold;background-color:#000;padding:2px 1em;border:1px solid #778fbd; border-radius:5px;}
+#palette a:hover {color:#fff;background-color:#fff;border:2px solid #778fbd; }
+#palette a.on {color:#fff;background-color:#fff;border:3px solid #778fbd;}
+#palette a.on:hover {color:#fff;background-color:#fff;border:3px solid #778fbd;}
+#palette a#red:hover {color:#fff;background-color:red;border:2px solid #778fbd; }
+#palette a#blue.on {color:#fff;background-color:blue;border:3px solid #778fbd;}
+#palette a#yellow.on:hover {color:#000;background-color:yellow;border:3px solid #778fbd;}
+#palette a#blue:hover {color:#fff;background-color:blue;border:2px solid #778fbd; }
+#palette a#red.on {color:#fff;background-color:red;border:3px solid #778fbd;}
+#palette a#red.on:hover {color:#fff;background-color:red;border:3px solid #778fbd;}
+#palette a#yellow:hover {color:#000;background-color:yellow;border:2px solid #778fbd; }
+#palette a#yellow.on {color:#000;background-color:yellow;border:3px solid #778fbd;}
+#palette a#blue.on:hover {color:#fff;background-color:blue;border:3px solid #778fbd;}
+        #sample {
+            display:inline-block;
+            width:10 em;
+          color:white;
+            background-color:white;
+        }
+.on{
+  border:1 #000 thick;
+  color:#000;
+}
+
+#top{
+  fill: red;
+}
+
+#left{
+  fill: blue;
+}
+
+#right{
+  fill: yellow;
+}
+
+#t0, #t1, #t2, #t3, #t4, #t5, #t6, #t7, #t8, #t9, #t10, #t11, #t12, #t13, #t14, #t15, #t16, #t17, #t18, #t19, #t20, #t21, #t22, #t23, #t24 {
+  visibility: hidden;
+}
+
+#countPanel {
+    float:right;
+    visibility: hidden;
+    font-size:2.5em;
+}
+
+#container {
+    width:700px;
+}
+
+
+    </style>
+  </head>
+  <body>
+      <div id="container">
+<h3 class="title">Select Colour:</h3>
+<div id="palette">
+  <a href="#" id="red" class="on">Red</a>
+  <a href="#" id="blue">Blue</a>
+  <a href="#" id="yellow">Yellow</a>
+</div>
+<!-- <div>Selected colour: <div id="sample">test</div></div> -->
+<div id="countPanel">Rainbow triangles: <span id="count"></span></div>
+</div>
+<svg viewBox="0 0 500 500">
+    <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#f00"/>
+      <stop offset="33%"  stop-color="#ff0"/>
+      <stop offset="67%"  stop-color="#0f0"/>
+      <stop offset="100%" stop-color="#00f"/>
+    </linearGradient>
+          <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#ff0"/>
+      <stop offset="33%"  stop-color="#f0f"/>
+      <stop offset="67%"  stop-color="#0ff"/>
+      <stop offset="100%" stop-color="#0f0"/>
+    </linearGradient>
+  </defs>
+      <g transform="translate(150, 0)">
+        
+        <polygon id="t0" points="20,110 80,110 50,50" fill="url(#gradient)" />
+        
+        <polygon id="t1" points="20,110 -10,170 50,170" fill="url(#gradient)" />
+        <polygon id="t2" points="20,110 80,110 50,170" fill="url(#gradient2)" />
+        <polygon id="t3" points="110,170 80,110 50,170" fill="url(#gradient)" />
+        
+        <polygon id="t4" points="20,230 -10,170 -40,230" fill="url(#gradient)" />
+        <polygon id="t5" points="20,230 -10,170 50,170" fill="url(#gradient2)" />
+<polygon id="t6" points="20,230 80,230 50,170" fill="url(#gradient)" />
+        <polygon id="t7" points="110,170 80,230 50,170" fill="url(#gradient2)" />
+        <polygon id="t8" points="110,170 80,230 140,230" fill="url(#gradient)" />
+        
+        <polygon id="t9" points="-70,290 -10,290 -40,230" fill="url(#gradient)" />
+        <polygon id="t10" points="20,230 -10,290 -40,230" fill="url(#gradient2)" />
+        <polygon id="t11" points="20,230 -10,290 50,290" fill="url(#gradient)" />
+        <polygon id="t12" points="20,230 80,230 50,290" fill="url(#gradient2)" />
+        <polygon id="t13" points="110,290 80,230 50,290" fill="url(#gradient)" />
+        <polygon id="t14" points="110,290 80,230 140,230" fill="url(#gradient2)" />
+        <polygon id="t15" points="110,290 170,290 140,230" fill="url(#gradient)" />
+        
+        <polygon id="t16" points="-70,290 -100,350 -40,350" fill="url(#gradient)" />
+        <polygon id="t17" points="-70,290 -10,290 -40,350" fill="url(#gradient2)" />
+        <polygon id="t18" points="20,350 -10,290 -40,350" fill="url(#gradient)" />
+        <polygon id="t19" points="20,350 -10,290 50,290" fill="url(#gradient2)" />
+        <polygon id="t20" points="20,350 80,350 50,290" fill="url(#gradient)" />
+        <polygon id="t21" points="110,290 80,350 50,290" fill="url(#gradient2)" />
+        <polygon id="t22" points="110,290 80,350 140,350" fill="url(#gradient)" />
+        <polygon id="t23" points="110,290 170,290 140,350" fill="url(#gradient2)" />
+        <polygon id="t24" points="200,350 170,290 140,350" fill="url(#gradient)" />
+        <line class="line" x1="50" y1="50" x2="-100" y2="350"/>
+          <line class="line" x1="50" y1="50" x2="200" y2="350"/>
+          <line class="line" x1="80" y1="110" x2="-40" y2="350"/>
+          <line class="line" x1="20" y1="110" x2="140" y2="350"/>
+          <line class="line" x1="20" y1="110" x2="80" y2="110"/>
+          <line class="line" x1="-10" y1="170" x2="80" y2="350"/>
+          <line class="line" x1="110" y1="170" x2="20" y2="350"/>
+          <line class="line" x1="-10" y1="170" x2="110" y2="170"/>
+        <line class="line" x1="-40" y1="230" x2="20" y2="350"/>
+          <line class="line" x1="-40" y1="230" x2="140" y2="230"/>
+          <line class="line" x1="140" y1="230" x2="80" y2="350"/>
+        <line class="line" x1="-70" y1="290" x2="170" y2="290"/>
+        <line class="line" x1="-70" y1="290" x2="-40" y2="350"/>
+        <line class="line" x1="170" y1="290" x2="140" y2="350"/>
+        <line class="line" x1="-100" y1="350" x2="200" y2="350"/>
+        <!-- First row with one circle -->
+        <circle id="top" class="circlef" cx="50" cy="50" r="5"/>
+
+        <g transform="translate(0, 90)">
+          <!-- Second row with two circles -->
+          <circle id="left2" class="circlef" cx="20" cy="20" r="5"/>
+          <circle id="right2" class="circlef" cx="80" cy="20" r="5"/>
+
+          <g transform="translate(-10, 80)">
+            <!-- Third row with three circles -->
+            <circle id="left3" class="circlef" cx="0" cy="0" r="5"/>
+            <circle id="inside3" class="circle" cx="60" cy="0" r="7"/>
+            <circle id="right3" class="circlef" cx="120" cy="0" r="5"/>
+
+            <g transform="translate(-10, 60)">
+              <!-- Fourth row with four circles -->
+              <circle id="left4" class="circlef" cx="-20" cy="0" r="5"/>
+              <circle id="inside41" class="circle" cx="40" cy="0" r="7"/>
+              <circle id="inside42" class="circle" cx="100" cy="0" r="7"/>
+              <circle id="right4" class="circlef" cx="160" cy="0" r="5"/>
+                        
+
+              <g transform="translate(-10, 60)">
+                <!-- Fifth row with five circles -->
+                <circle id="left5" class="circlef" cx="-40" cy="0" r="5"/>
+                <circle id="inside51" class="circle" cx="20" cy="0" r="7"/>
+                <circle id="inside52" class="circle" cx="80" cy="0" r="7"/>
+                <circle id="inside53" class="circle" cx="140" cy="0" r="7"/>
+                <circle id="right5" class="circlef" cx="200" cy="0" r="5"/>
+                
+                              <g transform="translate(-30, 60)">
+                <!-- Fifth row with five circles -->
+                <circle id="left" class="circlef" cx="-40" cy="0" r="5"/>
+                <circle id="bottom1" class="circlef" cx="20" cy="0" r="5"/>
+                <circle id="bottom2" class="circlef" cx="80" cy="0" r="5"/>
+                <circle id="bottom3" class="circlef" cx="140" cy="0" r="5"/>
+                <circle id="bottom4" class="circlef" cx="200" cy="0" r="5"/>
+                <circle id="right" class="circlef" cx="260" cy="0" r="5"/>
+              </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </svg>
+
+
+    
+  </body>
+</html>
+<script type="text/javascript" src="../jquery.3.3.1.js"></script>
+<!-- <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script> -->
+<script>
+        var cc = "red";
+        var numRainbow = 0;
+        var clickedVertices = [];
+const triangles = [
+                ["t0","top","left2","right2"],
+    
+                ["t1","left2","left3","inside3"],
+                ["t2","left2","right2","inside3"],
+                ["t3","right2","right3","inside3"],
+    
+                ["t4","left3","left4","inside41"],
+                ["t5","left3","inside41","inside3"],
+                ["t6","inside41","inside42","inside3"],
+                ["t7","inside42","right3","inside3"],
+                ["t8","inside42","right3","right4"],
+    
+                ["t9","left4","left5","inside51"],
+                ["t10","left4","inside41","inside51"],
+                 ["t11","inside41","inside52","inside51"],
+                 ["t12","inside41","inside42","inside52"],
+                   ["t13","inside53","inside42","inside52"],  
+                 ["t14","inside53","inside42","right4"],
+                 ["t15","inside53","right5","right4"],
+                  
+                  ["t16","left","left5","bottom1"], 
+                 ["t17","inside51","left5","bottom1"], 
+                 ["t18","inside51","bottom2","bottom1"], 
+                 ["t19","inside51","bottom2","inside52"], 
+                 ["t20","bottom3","bottom2","inside52"], 
+                 ["t21","bottom3","inside53","inside52"], 
+                 ["t22","bottom3","inside53","bottom4"], 
+                 ["t23","right5","inside53","bottom4"],
+                 ["t24","right5","right","bottom4"],
+                ];
+const lefts=["left2", "left3", "left4", "left5"];
+const rights=["right2", "right3", "right4", "right5"];
+const bottoms=["bottom1", "bottom2", "bottom3", "bottom4"];
+
+function getTriangles(e) {
+  const indices = [];
+  for (let i = 0; i < triangles.length; i++) {
+    const triangle = triangles[i] || [];
+    if (triangle.includes(e)) {
+      indices.push(i);
+    }
+  }
+  return indices;
+}
+
+function updateTriangle(e,clr,ttid) {
+  const triangle = triangles[e];
+  const colors = [];
+  if(clr == "red"){
+    colors.push("rgb(255, 0, 0)");
+  }
+  if(clr == "blue"){
+    colors.push("rgb(0, 0, 255)");
+  }
+  if(clr == "yellow"){
+    colors.push("rgb(255, 255, 0)");
+  }
+  
+  for (let i = 1; i < 4; i++) {
+    if(triangle[i] != ttid){ colors.push($("#"+triangle[i]).css("fill")); }
+
+  }
+  const icolors = colors || [];
+  if (icolors.includes("rgb(255, 0, 0)") && icolors.includes("rgb(255, 255, 0)") && icolors.includes("rgb(0, 0, 255)")) {
+      if($("#"+triangle[0]).css("visibility")  == "hidden"){
+    $("#"+triangle[0]).css("visibility", "visible");
+    numRainbow++;
+}
+  }
+  else{
+    if($("#"+triangle[0]).css("visibility")  == "visible"){$("#"+triangle[0]).css("visibility", "hidden");
+    numRainbow--;}
+    
+  }
+  $("#count").html(numRainbow);
+}
+
+$(document).ready(function()
+      {
+      $("a#red").attr("href", "javascript:void(0)");
+      $("a#blue").attr("href", "javascript:void(0)");
+      $("a#yellow").attr("href", "javascript:void(0)");
+      var topleft = null;
+      var topright = null;
+      var bottomleft = null;
+      var bottomright = null;
+      var leftbottom = null;
+      var rightbottom = null;
+      for (let i = 0; i < lefts.length; i++) {
+        x = (Math.floor(Math.random() * 2) == 0);
+        if(x){
+          $("#"+lefts[i]).css("fill","red");
+          if (i == 0){ topleft = "red"; }
+          if (i == 3){ bottomleft = "red"; }
+        }else{
+            $("#"+lefts[i]).css("fill","blue");
+            if (i == 0){ topleft = "blue"; }
+          if (i == 3){ bottomleft = "blue"; }
+        }
+        x = (Math.floor(Math.random() * 2) == 0);
+        if(x){
+          $("#"+rights[i]).css("fill","red");
+          if (i == 0){ topright = "red"; }
+          if (i == 3){ bottomright = "red"; }
+        }else{
+            $("#"+rights[i]).css("fill","yellow");
+            if (i == 0){ topright = "yellow"; }
+          if (i == 3){ bottomright = "yellow"; }
+        }
+        x = (Math.floor(Math.random() * 2) == 0);
+        if(x){
+          $("#"+bottoms[i]).css("fill","blue");
+          if (i == 0){ leftbottom = "blue"; }
+          if (i == 3){ rightbottom = "blue"; }
+        }else{
+            $("#"+bottoms[i]).css("fill","yellow");
+            if (i == 0){ leftbottom = "yellow"; }
+          if (i == 3){ rightbottom = "yellow"; }
+        }
+          
+    }
+    if(topleft == "blue" && topright == "yellow") { $("#t0").css("visibility", "visible"); numRainbow++; }
+    if(bottomleft=="red" && leftbottom=="yellow") { $("#t16").css("visibility", "visible"); numRainbow++; }
+    if(bottomright=="red" && rightbottom=="blue") { $("#t24").css("visibility", "visible"); numRainbow++; }
+    });
+  
+$("a#red").click(function ()
+      {
+  $("#palette *").removeClass("on");
+  $(this).addClass("on");
+  cc="red";
+  $("div#sample").css("background-color","#f80101");
+  $("div#sample").css("color","#f80101");
+});
+
+$("a#blue").click(function ()
+      {
+  $("#palette *").removeClass("on");
+  $(this).addClass("on");
+  cc="blue";
+  $("div#sample").css("background-color","#131bf3");
+  $("div#sample").css("color","#131bf3");
+});
+
+$("a#yellow").click(function ()
+      {
+  $("#palette *").removeClass("on");
+  $(this).addClass("on");
+  cc="yellow";
+  $("div#sample").css("background-color","#f8f801");
+  $("div#sample").css("color","#f8f801");
+});
+
+$(".circle").click(function ()
+{
+  $(this).css("fill",cc);
+    const ttid = $(this).attr("id");
+  const tt = getTriangles(ttid);
+    
+  for (let i = 0; i < tt.length; i++) {
+    updateTriangle(tt[i],cc,ttid);
+  }
+
+  if (!clickedVertices.includes(ttid)) {
+      clickedVertices.push(ttid);
+    }
+
+if(clickedVertices.length==6){
+  $("#countPanel").css("visibility", "visible");
+}
+  
+}
+);
+
+    </script>
