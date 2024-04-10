@@ -68,7 +68,7 @@ img{border:0;}
 }
 #content{padding:0px;box-sizing:border-box;}
 
-#outline{width:800px;margin:5% auto;border:solid 1px #999;border-top:0;background-color:#fff;}
+#outline{width:800px;margin:20em auto;border:solid 5px #999;background-color:#fff;}
 
 @media (max-width:800px){#outline{margin:0;padding:0;border:0;width:100%;}
 }
