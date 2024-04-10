@@ -9,7 +9,8 @@ html {
 }
 body{font-family:'Open Sans', "Lucida Grande", Arial, sans-serif;background:url(images/gradient.jpg) repeat-x;font-size:1em;font-weight: 300;
   font-size: 1em;
-  line-height: 1.5;}
+  line-height: 1.5;
+    margin: 20% 5%;}
   strong, b {
 font-weight: bold;
 }
