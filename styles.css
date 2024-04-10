@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:100");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,700");
 
-body,html{margin:0;padding:0;}
+body,html{margin:margin: 20% 5%;padding:0;}
 html {
   font-size: 100%;
   -webkit-text-size-adjust: 100%;
@@ -9,8 +9,7 @@ html {
 }
 body{font-family:'Open Sans', "Lucida Grande", Arial, sans-serif;background:url(images/gradient.jpg) repeat-x;font-size:1em;font-weight: 300;
   font-size: 1em;
-  line-height: 1.5;
-    margin: 20% 5%;}
+  line-height: 1.5;}
   strong, b {
 font-weight: bold;
 }
