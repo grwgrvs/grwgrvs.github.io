@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:100");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,700");
 
-body,html{margin:margin: 20% 5%;padding:0;}
+body,html{margin:0;padding:0;}
 html {
   font-size: 100%;
   -webkit-text-size-adjust: 100%;
@@ -38,6 +38,14 @@ img{border:0;}
   border-top:0;
   border-bottom-right-radius:5px;
 }
+
+#jobOpening {
+    border:thin solid red;
+    border-radius:5px;
+	padding:1em;
+	padding-top:0.8em;
+}
+
 @media (max-width:700px){
 	#profpicdiv{
 		float:none;margin:0 auto;
@@ -68,7 +76,7 @@ img{border:0;}
 }
 #content{padding:0px;box-sizing:border-box;}
 
-#outline{width:800px;height:600px;margin:auto;border:solid 5px #999;background-color:#fff;}
+#outline{width:800px;margin:0 auto;border:solid 1px #999;border-top:0;background-color:#fff;}
 
 @media (max-width:800px){#outline{margin:0;padding:0;border:0;width:100%;}
 }
@@ -87,7 +95,7 @@ h2{font-family:'Lato', 'Open Sans', Arial, sans-serif;color:#778fbd;font-size:2.
 @media (max-width:480px){h1{font-size:3em;font-weight:100;text-align:center;}
 }
 h3{color:#000;font-size:1.2em;font-weight:bold;border-bottom:solid 1px #999;}
-h4{color:#000;font-size:1em;font-weight:bold;margin-bottom:5px;}
+h4{color:#000;font-size:1em;font-weight:bold;margin-bottom:3px;}
 a{color:#666;text-decoration:underline;}
 a, a:active, a:focus {
 outline: none;
