@@ -311,6 +311,14 @@ table.sched {
 	width:70%;
 	min-width:350px;
 }
+
+.vidlst {
+	padding: 10px;
+	border-bottom-right-radius:5px;
+	border-right:1px solid #778fbd;
+	border-bottom:1px solid #778fbd;
+	
+}
 .heightpad{
   min-height: 10px
   padding: 10px;
