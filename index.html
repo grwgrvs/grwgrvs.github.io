@@ -1286,27 +1286,19 @@
   					} 
 
   			}
-  			</script>
-  			<script type="text/javascript">
   			if(acccount > 0){
   				artstr += '<h4>Accepted for publication</h4>\n';
   					for (x = 1; x <= acccount; x++) {
   					   artstr += format_article(pubcount+acccount-x+1,accepted[x][0],accepted[x][1],accepted[x][2], accepted[x][3], accepted[x][6], accepted[x][5], accepted[x][7]);
   					} 
   			}
-  			</script>
-  			<script type="text/javascript">
   			if(pubcount > 0){
   				artstr += '<div class="clear"></div><h4>Published</h4>\n';
   					for (x = 1; x <= pubcount; x++) {
   					    artstr += format_article(pubcount-x+1,published[x][0],published[x][1],published[x][2], published[x][3], published[x][4],published[x][5], published[x][7]);
   					} 
   			}
-  			</script>
-  			<script type="text/javascript">
   			artstr +='<div id="rankDiv"><a href="javascript:void(0)" id=rank>?</a></div>';
-  			</script>
-			<script type="text/javascript">
 			var calstr ="";
 			if(nowcount > 0){
 				calstr += '<h3>Happening now</h3>\n';
