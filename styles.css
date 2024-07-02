@@ -7,7 +7,7 @@ html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }
-body{font-family:'Open Sans', "Lucida Grande", Arial, sans-serif;background:url(images/gradient.jpg) repeat-x;font-size:1em;font-weight: 300;
+body{font-family:'Open Sans', 'Lucida Grande', Arial, sans-serif;background:url(images/gradient.jpg) repeat-x;font-size:1em;font-weight: 300;
   font-size: 1em;
   line-height: 1.5;}
   strong, b {
@@ -84,7 +84,7 @@ img{border:0;}
 p{color:#222;}
 #other{display:none;}
 h1{
-	font-family:"Lato", "Open Sans", Arial, sans-serif;
+	font-family:Lato, 'Open Sans', Arial, sans-serif;
 	font-size:3.5em;font-weight:100;line-height: 1;
 	color:#778fbd;
 	line-height: 1;
