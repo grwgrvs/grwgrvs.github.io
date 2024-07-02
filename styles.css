@@ -84,14 +84,14 @@ img{border:0;}
 p{color:#222;}
 #other{display:none;}
 h1{
-	font-family:Lato, 'Open Sans', Arial, sans-serif;
+	font-family: Lato, 'Open Sans', Arial, sans-serif;
 	font-size:3.5em;font-weight:100;line-height: 1;
 	color:#778fbd;
 	line-height: 1;
 	text-align:center;
 	margin:0 10px 12px 10px;
 }
-h2{font-family:Lato, 'Open Sans', Arial, sans-serif;color:#778fbd;font-size:2.1em;font-weight:100;line-height: 1;margin-top:0;}
+h2{font-family: Lato, 'Open Sans', Arial, sans-serif;color:#778fbd;font-size:2.1em;font-weight:100;line-height: 1;margin-top:0;}
 @media (max-width:480px){h1{font-size:3em;font-weight:100;text-align:center;}
 }
 h3{color:#000;font-size:1.2em;font-weight:bold;border-bottom:solid 1px #999;}
