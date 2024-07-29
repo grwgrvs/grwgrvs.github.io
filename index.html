@@ -37,24 +37,11 @@
 							</div>
 						</div>
 					</div>
-					<div id="selfDesc">
-				  	<!-- <h2>About</h2> -->
-					<p>
-						I am an Assistant Professor of the <a href="https://www.ntu.edu.sg/spms/about-us/mathematics" target="_blank">Division of Mathematical Sciences</a> in the <a href="https://www.ntu.edu.sg/spms" target="_blank">School of Physical and Mathematical Sciences</a> at <a href="http://www.ntu.edu.sg/" target="_blank">Nanyang Technological University - NTU Singapore</a>.
-					</p>
-					
-					<div id="jobOpening">
-						<b> Job Opening</b>
-						<br>
-						I am <a href="https://ntu.wd3.myworkdayjobs.com/en-US/Careers/job/NTU-Main-Campus-Singapore/Research-Fellow--Algebra-and-Combinatorics-_R00016691-1">hiring a postdoctoral fellow</a>.  If you are interested to work with me, please get in touch.
-					</div>
-
-					</div>
 				</div>
 				<div id="main">
 					<div id="menu" class="gone">
 						<ul>
-							<!-- <li><a href="#about" id="ab">About</a></li> -->
+							<li><a href="#about" id="ab">About</a></li>
 							<li><a href="#research" id="re">Research</a></li>
 							<!-- <li><a href="#teaching" id="te">Teaching</a></li> -->
 							<li><a href="#calendar" id="ca">Calendar</a></li>
@@ -68,6 +55,47 @@
 					<div id="more">
 						<div id="splash">
 							<p>To view this webpage, <b>javascript</b> must be <b>enabled</b>.</p>
+						</div>
+						<div id="about" class="gone">
+	  	<h2>About</h2>
+		<p>
+			I am an Assistant Professor of the <a href="https://www.ntu.edu.sg/spms/about-us/mathematics" target="_blank">Division of Mathematical Sciences</a> in the <a href="https://www.ntu.edu.sg/spms" target="_blank">School of Physical and Mathematical Sciences</a> at <a href="http://www.ntu.edu.sg/" target="_blank">Nanyang Technological University - NTU Singapore</a>.
+		</p>
+	
+		<div id="jobOpening">
+			<b> Job Opening</b>
+			<br>
+			I am <a href="https://ntu.wd3.myworkdayjobs.com/en-US/Careers/job/NTU-Main-Campus-Singapore/Research-Fellow--Algebra-and-Combinatorics-_R00016691-1">hiring a postdoctoral fellow</a>.  If you are interested to work with me, please get in touch.
+		</div>
+<p>My main research interests are in algebraic graph theory, combinatorial design theory, and computational discrete mathematics.</p>
+
+
+<h3>Selected Presentations</h3>
+		<div class="pres">
+			<img style="float: right; width: 60%" alt="" src="posters/cc24.jpg">
+			<strong>Invited Speaker</strong> <br/>
+			<div class="name">Combinatorics in Christchurch </div>
+			<div class="when">from 4 June 2024 until 6 June 2024 </div>
+			<div class="where">University of Canterbury, Christchurch, New Zealand</div>
+			<div class="clear"></div>
+		</div>
+		<div class="pres">
+			<img style="float: left; width: 60%; padding-right: 2em" alt="" src="posters/msp24.jpg">
+			<strong>Invited Plenary Speaker</strong> <br/>
+			<div class="name">MSP Annual Convention </div>
+			<div class="when">from 30 May 2024 until 2 June 2024 </div>
+			<div class="where">University of the Philippines Tacloban College, Philippines</div>
+			<div class="clear"></div>
+		</div>
+		<div class="pres">
+			<img style="float: right; width: 60%" alt="" src="posters/acc23.jpg">
+			<strong>Invited Speaker</strong> <br/>
+			<div class="name">45th Australasian Combinatorics Conference  </div>
+			<div class="when">from 11 December 2023 until 15 December 2023 </div>
+			<div class="where">The University of Western Australia, Perth, Australia</div>
+			<div class="clear"></div>
+		</div>
+		</div>
 						</div>
 						<div id="research" class="gone">
 							<h2>Research</h2>
@@ -165,9 +193,9 @@
 				"Byrnes and Foreman",
 				"Random matrix theory is a useful tool in the study of the physics of multiple scattering systems, often striking a balance between computation speed and physical rigour. Propagation of waves through thick disordered media, as arises in for example optical scattering or electron transport, typically necessitates cascading of multiple random matrices drawn from an underlying ensemble for thin media, greatly increasing computational burden. Here we propose a dual pool based bootstrapping approach to speed up statistical studies of scattering in thick random media. We examine how potential matrix reuse in a pool based approach can impact statistical estimates of population averages. Specifically, we discuss how both bias and additional variance in the sample mean estimator are introduced through bootstrapping. In the diffusive scattering regime, the extra estimator variance is shown to originate from samples in which cascaded transfer matrices are permuted matrix products. Through analysis of the combinatorics and cycle structure of permutations we quantify the resulting correlations. Proofs of several analytic formulae enumerating the frequency with which correlations of different strengths occur are derived. Extension to the ballistic regime is briefly considered.",
 				"https://arxiv.org/abs/2405.02541",
+				"Phys. Rev. E <strong>110</strong> (2024), 015308",
+				[["DOI", "https://doi.org/10.1103/PhysRevE.110.015308"]],
 				null,
-				[],
-				"To appear in Physical Review E",
 			21100855841],
 				["Constructions of $t$-designs from weighing matrices and walk-regular graphs",
 				"Suda",
@@ -922,7 +950,7 @@
 			var currentPage = 1;
 			var processing = false;
 			var totalPages = pastpages;
-			var page = "re";
+			var page = "ab";
 			$(document).ready(function()
 			{
 			$("#menu").sticky({ topSpacing: 0, zIndex: 3000 });
@@ -931,8 +959,8 @@
 			$("#more div#teaching").hide();
 			$("#more div#videos").hide();
 			$("#more div#splash").hide();
-			$("div#research").removeClass("gone");
-			$("div#research *").removeClass("gone");
+			$("div#about").removeClass("gone");
+			$("div#about *").removeClass("gone");
 			$("div#menu").removeClass("gone");
 			$("div#menu *").removeClass("gone");
 			$("a#re").attr("href", "javascript:void(0)");
@@ -945,12 +973,19 @@
 				if(processing)
 				          return;
 				processing = true;
-				$("#heightpad").css("height", $(window).height());
+				// $("#heightpad").css("height", $(window).height());
 				$("#menu ul").removeClass("responsive");
 				$("#menu *").removeClass("on");
 				$(this).addClass("on");
-				$('html, body').animate({scrollTop : $("#selfDesc").offset().top-topDiff},300);
-				$("#heightpad").css("height", Math.max($(window).height() - $("#more").height(),0));
+				$('html, body').animate({scrollTop : $("#more").offset().top-topDiff},300);
+					$("div#research, div#calendar, div#teaching, div#videos").fadeOut(500, function(){
+						$("#more div").addClass("gone");
+						$("div#about *").removeClass("gone");
+						$("div#about").removeClass("gone");
+						$("div#about").fadeIn(500, function(){processing = false;
+						});
+					});
+				// $("#heightpad").css("height", Math.max($(window).height() - $("#more").height()-10,0));
 				processing = false;
 			});
 			$("a#re").click(function ()
@@ -959,19 +994,19 @@
 				          return;
 				processing = true;
 				page = "re";
-				$("#heightpad").css("height", $(window).height());
+				// $("#heightpad").css("height", $(window).height());
 				$("#menu ul").removeClass("responsive");
 				$("#menu *").removeClass("on");
 				$(this).addClass("on");
 				$('html, body').animate({scrollTop : $("#more").offset().top-topDiff},300);
-					$("div#calendar, div#teaching, div#videos").fadeOut(500, function(){
+					$("div#about, div#calendar, div#teaching, div#videos").fadeOut(500, function(){
 						$("#more div").addClass("gone");
 						$("div#research *").removeClass("gone");
 						$("div#research").removeClass("gone");
 						$("div#research").fadeIn(500, function(){processing = false;
 						});
 					});
-				$("#heightpad").css("height", Math.max($(window).height() - $("#more").height()+10,0));
+				// $("#heightpad").css("height", Math.max($(window).height() - $("#more").height(),0));
 				return false;
 
 			});
@@ -981,13 +1016,13 @@
 				          return;
 				processing = true;
 				page = "te";
-				$("#heightpad").css("height", $(window).height());
+				// $("#heightpad").css("height", $(window).height());
 				$("#menu ul").removeClass("responsive");
 
 				$("#menu *").removeClass("on");
 				$(this).addClass("on");
 				$('html, body').animate({scrollTop : $("#more").offset().top-topDiff},300);
-					$("div#calendar, div#research, div#videos").fadeOut(500, function(){
+					$("div#about, div#calendar, div#research, div#videos").fadeOut(500, function(){
 						$("#more div").addClass("gone");
 						$("div#teaching").removeClass("gone");
 						$("div#teaching *").removeClass("gone");
@@ -996,7 +1031,7 @@
 						});
 				
 					});
-				$("#heightpad").css("height", Math.max($(window).height() - $("#more").height()+10,0));
+				// $("#heightpad").css("height", Math.max($(window).height() - $("#more").height(),0));
 				return false;
 
 			});
@@ -1006,19 +1041,19 @@
 				          return;
 				processing = true;
 				page = "vi";
-				$("#heightpad").css("height", $(window).height());
+				// $("#heightpad").css("height", $(window).height());
 				$("#menu ul").removeClass("responsive");
 				$("#menu *").removeClass("on");
 				$(this).addClass("on");
 				$('html, body').animate({scrollTop : $("#more").offset().top-topDiff},300);
-					$("div#calendar, div#teaching, div#research").fadeOut(500, function(){
+					$("div#about, div#calendar, div#teaching, div#research").fadeOut(500, function(){
 						$("#more div").addClass("gone");
 						$("div#videos *").removeClass("gone");
 						$("div#videos").removeClass("gone");
 						$("div#videos").fadeIn(500, function(){processing = false;
 						});
 					});
-				$("#heightpad").css("height", Math.max($(window).height() - $("#more").height()+10,0));
+				// $("#heightpad").css("height", Math.max($(window).height() - $("#more").height(),0));
 				return false;
 
 			});
@@ -1028,33 +1063,33 @@
 
 			});
 			var topofDiv = $("#more").offset().top; //gets offset of header
-			$(window).scroll(function(){
-			    if($(window).scrollTop() > topofDiv - 20){
-				    $("#menu ul").removeClass("responsive");
-					$("#menu *").removeClass("on");
-					if(page == "re"){
-						$("#re").addClass("on");
-					}
-					if(page == "ca"){
-						$("#ca").addClass("on");
-					}
-					if(page == "vi"){
-						$("#vi").addClass("on");
-					}
-			    }
-			    else{
-				    $("#menu ul").removeClass("responsive");
-					$("#menu *").removeClass("on");
-					$("#ab").addClass("on");
-			    }
-			});
+			// $(window).scroll(function(){
+// 			    if($(window).scrollTop() > topofDiv - 20){
+// 				    $("#menu ul").removeClass("responsive");
+// 					$("#menu *").removeClass("on");
+// 					if(page == "re"){
+// 						$("#re").addClass("on");
+// 					}
+// 					if(page == "ca"){
+// 						$("#ca").addClass("on");
+// 					}
+// 					if(page == "vi"){
+// 						$("#vi").addClass("on");
+// 					}
+// 			    }
+// 			    else{
+// 				    $("#menu ul").removeClass("responsive");
+// 					$("#menu *").removeClass("on");
+// 					$("#ab").addClass("on");
+// 			    }
+// 			});
 			$("a#ca").click(function ()
 			{
 				if(processing)
 					return;
 				processing = true;
 				page = "ca";
-				$("#heightpad").css("height", $(window).height());
+				// $("#heightpad").css("height", $(window).height());
 				$("#menu ul").removeClass("responsive");
 				$("#menu *").removeClass("on");
 				$("#pastpag *").removeClass("on");
@@ -1062,7 +1097,7 @@
 
 							$('html, body').animate({scrollTop : $("#more").offset().top-topDiff},300);
 					
-							$("div#research, div#teaching, div#videos").fadeOut(500, function() {
+							$("div#about, div#research, div#teaching, div#videos").fadeOut(500, function() {
 								$("#more div").addClass("gone");
 								$("div#calendar *").removeClass("gone");
 								$("div#calendar").removeClass("gone");
@@ -1090,7 +1125,7 @@
 									format_click_script(x,pastpages);
 								} 
 							});
-							$("#heightpad").css("height", Math.max($(window).height() - $("#more").height()+10,0));
+							// $("#heightpad").css("height", Math.max($(window).height() - $("#more").height()+10,0));
 						});
 					
 						// }
@@ -1317,7 +1352,7 @@
   					    artstr += format_article(pubcount-x+1,published[x][0],published[x][1],published[x][2], published[x][3], published[x][4],published[x][5], published[x][7]);
   					} 
   			}
-  			artstr +='<div id="rankDiv"><a href="javascript:void(0)" id=rank>?</a></div>';
+  			artstr +='<div id="rankDiv"><a href="javascript:void(0)" id=rank>Toggle Scimago</a></div>';
 			var calstr ="";
 			if(nowcount > 0){
 				calstr += '<h3>Happening now</h3>\n';
