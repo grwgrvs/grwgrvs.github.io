@@ -29,7 +29,8 @@ img{border:0;}
   margin: 0 0 0 0;
 }
 #profpicdiv {
-  background: url(images/nea300.jpeg) no-repeat 0 0;
+  /*background: url(images/nea300.jpeg) no-repeat 0 0;*/
+  background: url(images/profPicweb.jpeg) no-repeat 0 0;
   border:thin solid #ddd;
   border-left:0;
   border-top:0;
