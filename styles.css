@@ -90,8 +90,8 @@ h1{
 	margin:0 10px 12px 10px;
 }
 h2{font-family: Lato, 'Open Sans', Arial, sans-serif;color:#778fbd;font-size:2.1em;font-weight:100;line-height: 1;margin-top:0;}
-@media (max-width:480px){h1{font-size:3em;font-weight:100;text-align:center;}
-}
+/*@media (max-width:480px){h1{font-size:3em;font-weight:100;text-align:center;}
+}*/
 h3{color:#000;font-size:1.2em;font-weight:bold;border-bottom:solid 1px #999;}
 h4{color:#000;font-size:1em;font-weight:bold;margin-bottom:3px;}
 a{color:#666;text-decoration:underline;}
