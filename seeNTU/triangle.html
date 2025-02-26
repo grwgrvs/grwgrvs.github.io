@@ -2,192 +2,160 @@
 <html>
   <head>
     <title>Equilateral Triangle with Hovering Point</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-            body {
-        font-size:1.5em;
+      body {
+        font-size: 1.5em;
       }
-        svg {
-        width: 1000px;
+      svg {
+        width: 100%;
         height: auto;
       }
-        #msg {
-          position: relative;
-          top: 10px;
-          left: 10px;
-          width: 500px;
-          height: 150px;
+      #msg {
+        position: relative;
+        top: 10px;
+        left: 10px;
+        width: 100%;
+        height: auto;
+      }
+      #object {
+        fill: red;
+      }
+      #triangle {
+        stroke: black;
+        fill: transparent;
+      }
+      @media (max-width: 600px) {
+        body {
+          font-size: 1em;
         }
-
-        #object {
-          fill: red;
+        svg {
+          width: 100%;
         }
-
-        #triangle {
-          stroke: black;
-          fill: transparent;
-        }
+      }
     </style>
   </head>
   <body>
-      <div id="msg">Click inside the triangle</div>
-    <svg width="1000" height="1000">
+    <div id="msg">Click inside the triangle</div>
+    <svg>
       <polygon id="triangle" points="" />
       <circle id="object" r="10" cx="0" cy="0" />
-      <!-- <circle id="in" r="5" cx="0" cy="0" /> -->
     </svg>
 
-
     <script>
-        var svg = document.querySelector('svg');
-        var triangle = document.querySelector('#triangle');
-        var object = document.querySelector('#object');
-        // var inter = document.querySelector('#in');
-        var msg = document.querySelector('#msg');
-        var svgNS = "http://www.w3.org/2000/svg";
-        var line1 = document.createElementNS(svgNS, 'line');
-        line1.setAttribute('id', 'line1');
-        line1.setAttribute('stroke', 'red');
-        line1.setAttribute('stroke-width', '2');
-        svg.appendChild(line1);
-        var line2 = document.createElementNS(svgNS, 'line');
-        line2.setAttribute('id', 'line2');
-        line2.setAttribute('stroke', 'blue');
-        line2.setAttribute('stroke-width', '2');
-        svg.appendChild(line2);
-        var line3 = document.createElementNS(svgNS, 'line');
-        line3.setAttribute('id', 'line3');
-        line3.setAttribute('stroke', 'yellow');
-        line3.setAttribute('stroke-width', '2');
-        svg.appendChild(line3);
-        
+      var svg = document.querySelector('svg');
+      var triangle = document.querySelector('#triangle');
+      var object = document.querySelector('#object');
+      var msg = document.querySelector('#msg');
+      var svgNS = "http://www.w3.org/2000/svg";
+      var line1 = document.createElementNS(svgNS, 'line');
+      line1.setAttribute('id', 'line1');
+      line1.setAttribute('stroke', 'red');
+      line1.setAttribute('stroke-width', '2');
+      svg.appendChild(line1);
+      var line2 = document.createElementNS(svgNS, 'line');
+      line2.setAttribute('id', 'line2');
+      line2.setAttribute('stroke', 'blue');
+      line2.setAttribute('stroke-width', '2');
+      svg.appendChild(line2);
+      var line3 = document.createElementNS(svgNS, 'line');
+      line3.setAttribute('id', 'line3');
+      line3.setAttribute('stroke', 'yellow');
+      line3.setAttribute('stroke-width', '2');
+      svg.appendChild(line3);
 
-        var centerX = 350;
-        var centerY = 350;
-        var sideLength = 600.444279957210795089514731722;
-        var trianglePoints = [
-          [centerX, centerY - sideLength/Math.sqrt(3)],
-          [centerX + sideLength/2, centerY + sideLength/(2*Math.sqrt(3))],
-          [centerX - sideLength/2, centerY + sideLength/(2*Math.sqrt(3))]
-        ];
-        
-        var triangleHeight = 3*sideLength/(2*Math.sqrt(3));
-        var triangleWidth = sideLength;
+      var centerX = 350;
+      var centerY = 350;
+      var sideLength = 600.444279957210795089514731722;
+      var trianglePoints = [
+        [centerX, centerY - sideLength / Math.sqrt(3)],
+        [centerX + sideLength / 2, centerY + sideLength / (2 * Math.sqrt(3))],
+        [centerX - sideLength / 2, centerY + sideLength / (2 * Math.sqrt(3))]
+      ];
 
-        // set the points of the triangle
-        triangle.setAttribute('points', trianglePoints.join(' '));
-        
-        function pointInTriangle(point, triVertices) {
-          // Extract the vertices of the triangle
-          const [v1, v2, v3] = triVertices;
-  
-          // Compute the vectors representing the edges of the triangle
-          const e1 = [v2[0] - v1[0], v2[1] - v1[1]];
-          const e2 = [v3[0] - v1[0], v3[1] - v1[1]];
-  
-          // Compute the barycentric coordinates of the point with respect to the triangle
-          const e1p = [point[0] - v1[0], point[1] - v1[1]];
-          const det = e1[0] * e2[1] - e1[1] * e2[0];
-          const b1 = (e2[1] * e1p[0] - e2[0] * e1p[1]) / det;
-          const b2 = (-e1[1] * e1p[0] + e1[0] * e1p[1]) / det;
-          const b3 = 1 - b1 - b2;
-  
-          // Check if the point is inside the triangle
-          return b1 >= 0 && b1 <= 1 && b2 >= 0 && b2 <= 1 && b3 >= 0 && b3 <= 1;
-        }
-        
+      var triangleHeight = (3 * sideLength) / (2 * Math.sqrt(3));
+      var triangleWidth = sideLength;
 
-        // on mouse move, update the position of the object and the message
-        svg.addEventListener('click', function(e) {
-          var x = e.clientX - svg.getBoundingClientRect().left;
-          var y = e.clientY - svg.getBoundingClientRect().top;
-          
-          if (pointInTriangle([x,y], trianglePoints)) {
+      triangle.setAttribute('points', trianglePoints.join(' '));
 
+      function pointInTriangle(point, triVertices) {
+        const [v1, v2, v3] = triVertices;
+        const e1 = [v2[0] - v1[0], v2[1] - v1[1]];
+        const e2 = [v3[0] - v1[0], v3[1] - v1[1]];
+        const e1p = [point[0] - v1[0], point[1] - v1[1]];
+        const det = e1[0] * e2[1] - e1[1] * e2[0];
+        const b1 = (e2[1] * e1p[0] - e2[0] * e1p[1]) / det;
+        const b2 = (-e1[1] * e1p[0] + e1[0] * e1p[1]) / det;
+        const b3 = 1 - b1 - b2;
+        return b1 >= 0 && b1 <= 1 && b2 >= 0 && b2 <= 1 && b3 >= 0 && b3 <= 1;
+      }
+
+      svg.addEventListener('click', function (e) {
+        var x = e.clientX - svg.getBoundingClientRect().left;
+        var y = e.clientY - svg.getBoundingClientRect().top;
+
+        if (pointInTriangle([x, y], trianglePoints)) {
           object.setAttribute('cx', x);
           object.setAttribute('cy', y);
-          
+
           function computePerpendicularBisector1(cursorX, cursorY) {
             const leftVertex = trianglePoints[2];
             const topVertex = trianglePoints[0];
             const rightVertex = trianglePoints[1];
-            // Compute the slope of the line from the cursor to the midpoint
-            const slope = (topVertex[1]-leftVertex[1])/(topVertex[0]-leftVertex[0]);
-            
-            const perpSlope = -1/slope;
-            
-            const c1 = leftVertex[1]-slope*leftVertex[0];
-
-            // Compute the midpoint of the line from the cursor to the midpoint
-            const cc = cursorY-perpSlope*cursorX;
-
-            // Compute the y-intercept of the perpendicular bisector
-            const xIntercept = perpSlope*(c1-cc)/(perpSlope*perpSlope+1);
-            const yIntercept = perpSlope*xIntercept+cc;
-
-            // Return an object containing the slope and y-intercept of the perpendicular bisector
+            const slope = (topVertex[1] - leftVertex[1]) / (topVertex[0] - leftVertex[0]);
+            const perpSlope = -1 / slope;
+            const c1 = leftVertex[1] - slope * leftVertex[0];
+            const cc = cursorY - perpSlope * cursorX;
+            const xIntercept = perpSlope * (c1 - cc) / (perpSlope * perpSlope + 1);
+            const yIntercept = perpSlope * xIntercept + cc;
             return { xIntercept: xIntercept, yIntercept: yIntercept };
           }
-          
+
           function computePerpendicularBisector2(cursorX, cursorY) {
             const leftVertex = trianglePoints[2];
             const topVertex = trianglePoints[0];
             const rightVertex = trianglePoints[1];
-            // Compute the slope of the line from the cursor to the midpoint
-            const slope = (topVertex[1]-rightVertex[1])/(topVertex[0]-rightVertex[0]);
-            
-            const perpSlope = -1/slope;
-            
-            const c1 = rightVertex[1]-slope*rightVertex[0];
-
-            // Compute the midpoint of the line from the cursor to the midpoint
-            const cc = cursorY-perpSlope*cursorX;
-
-            // Compute the y-intercept of the perpendicular bisector
-            const xIntercept = perpSlope*(c1-cc)/(perpSlope*perpSlope+1);
-            const yIntercept = perpSlope*xIntercept+cc;
-
-            // Return an object containing the slope and y-intercept of the perpendicular bisector
+            const slope = (topVertex[1] - rightVertex[1]) / (topVertex[0] - rightVertex[0]);
+            const perpSlope = -1 / slope;
+            const c1 = rightVertex[1] - slope * rightVertex[0];
+            const cc = cursorY - perpSlope * cursorX;
+            const xIntercept = perpSlope * (c1 - cc) / (perpSlope * perpSlope + 1);
+            const yIntercept = perpSlope * xIntercept + cc;
             return { xIntercept: xIntercept, yIntercept: yIntercept };
           }
-          
-          function computePerpendicularBisector3(cursorX, cursorY) {
 
-            // Return an object containing the slope and y-intercept of the perpendicular bisector
-            return { xIntercept: cursorX, yIntercept: centerY + sideLength/(2*Math.sqrt(3)) };
+          function computePerpendicularBisector3(cursorX, cursorY) {
+            return { xIntercept: cursorX, yIntercept: centerY + sideLength / (2 * Math.sqrt(3)) };
           }
 
-          // update line 1
           var line1 = document.querySelector('#line1');
-          var bisector1=computePerpendicularBisector1(x, y);
+          var bisector1 = computePerpendicularBisector1(x, y);
           line1.setAttribute('x1', x);
           line1.setAttribute('y1', y);
           line1.setAttribute('x2', bisector1.xIntercept);
           line1.setAttribute('y2', bisector1.yIntercept);
-          var redLength = Math.sqrt((x-bisector1.xIntercept)**2 + (y-bisector1.yIntercept)**2);
+          var redLength = Math.sqrt((x - bisector1.xIntercept) ** 2 + (y - bisector1.yIntercept) ** 2);
 
-          // update line 2
           var line2 = document.querySelector('#line2');
-          var bisector2=computePerpendicularBisector2(x, y);
+          var bisector2 = computePerpendicularBisector2(x, y);
           line2.setAttribute('x1', x);
           line2.setAttribute('y1', y);
           line2.setAttribute('x2', bisector2.xIntercept);
           line2.setAttribute('y2', bisector2.yIntercept);
-          var blueLength = Math.sqrt((x-bisector2.xIntercept)**2 + (y-bisector2.yIntercept)**2);
+          var blueLength = Math.sqrt((x - bisector2.xIntercept) ** 2 + (y - bisector2.yIntercept) ** 2);
 
-          // update line 3
           var line3 = document.querySelector('#line3');
-          var bisector3=computePerpendicularBisector3(x, y);
+          var bisector3 = computePerpendicularBisector3(x, y);
           line3.setAttribute('x1', x);
           line3.setAttribute('y1', y);
           line3.setAttribute('x2', bisector3.xIntercept);
           line3.setAttribute('y2', bisector3.yIntercept);
-          var yellowLength = Math.sqrt((x-bisector3.xIntercept)**2 + (y-bisector3.yIntercept)**2);
+          var yellowLength = Math.sqrt((x - bisector3.xIntercept) ** 2 + (y - bisector3.yIntercept) ** 2);
           var sum = redLength + blueLength + yellowLength;
 
-          // update message
           msg.innerHTML = 'R: ' + redLength + ';<br> B: ' + blueLength + ';<br> Y: ' + yellowLength + ';<br> R + B + Y= ' + sum;
-      }
-        });
+        }
+      });
     </script>
   </body>
 </html>
