@@ -38,6 +38,10 @@
 
 
     <script>
+      var siteWidth = 1280;
+var scale = screen.width /siteWidth;
+
+document.querySelector('meta[name="viewport"]').setAttribute('content', 'width='+siteWidth+', initial-scale='+scale+'');
         var svg = document.querySelector('svg');
         var triangle = document.querySelector('#triangle');
         var object = document.querySelector('#object');
