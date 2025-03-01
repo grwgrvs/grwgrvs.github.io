@@ -27,11 +27,10 @@
           fill: transparent;
         }
     </style>
-    <meta name="viewport" content="width=1280, initial-scale=1">
   </head>
   <body>
       <div id="msg">Click inside the triangle</div>
-    <svg width="1000" height="1000">
+    <svg width="600" height="1000">
       <polygon id="triangle" points="" />
       <circle id="object" r="10" cx="0" cy="0" />
       <!-- <circle id="in" r="5" cx="0" cy="0" /> -->
@@ -39,10 +38,6 @@
 
 
     <script>
-      var siteWidth = 1280;
-var scale = screen.width /siteWidth;
-
-document.querySelector('meta[name="viewport"]').setAttribute('content', 'width='+siteWidth+', initial-scale='+scale+'');
         var svg = document.querySelector('svg');
         var triangle = document.querySelector('#triangle');
         var object = document.querySelector('#object');
