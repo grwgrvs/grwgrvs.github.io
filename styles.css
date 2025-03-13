@@ -64,7 +64,7 @@ img{border:0;}
     background-size: 100% auto;
   }
 }
-#more {position:absolute;}
+#more {position:relative;}
 
 #content{text-align:center;padding:0px;box-sizing:border-box;}
 #leftTop{}
