@@ -141,13 +141,13 @@ background-repeat: no-repeat;}
 background-repeat: no-repeat;}
 #orcid-link{background-image: url("images/32px-ORCID-iD.svg.png");
 background-repeat: no-repeat;}*/
-#alt{text-align:center;margin:0;padding:0;padding:5px;border:0;background-color:#fff;}
+#alt{text-align:center;margin:0;padding:0;padding:0px;border:0;background-color:#fff;}
 #alt ul{margin:0 0;padding:0;list-style-type:none;text-align:center;font-size:1em;}
 #alt ul > li{margin:0 auto;padding:0;list-style:none;display:-moz-inline-stack;
 display:inline-block;
 /*zoom:1;*/
 display:inline;}
-#alt ul li a{color:#333;text-decoration:none;font-weight:bold;margin:0 0.5em;padding:0.2em 1em;list-style:none;border:1px solid #cbcfe4;border-radius:5px;text-align:center;display:-moz-inline-stack;
+#alt ul li a{color:#333;text-decoration:none;font-weight:bold;margin:0 0.1em;padding:0.2em 1em;list-style:none;border:1px solid #cbcfe4;border-radius:5px;text-align:center;display:-moz-inline-stack;
 display:inline-block;
 /*zoom:1;*/
 display:inline;}
