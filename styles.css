@@ -9,6 +9,7 @@ body{font-family:'Open Sans', 'Lucida Grande', Arial, sans-serif;background:url(
   line-height: 1.5;}
   strong, b {
 font-weight: bold;
+	  min-width: 350px;
 }
 @media (max-width:480px){body{font-size:1em;background:0;}
 }
