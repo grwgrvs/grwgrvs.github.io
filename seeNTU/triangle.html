@@ -185,7 +185,7 @@
           var sum = redLength + blueLength + yellowLength;
 
           // update message
-          msg.innerHTML = '<span style="color:red;">R = ' + Math.round(redLength) + ' cm;</span><br> <span style="color:blue;">B = ' + Math.round(blueLength) + ' cm;</span><br> <span style="background-color: yellow;">Y = ' + Math.round(yellowLength) + ' cm;</span><br> <span style="color:red;">R</span> + <span style="color:blue;">B</span> + <span style="background-color: yellow;">Y</span> = ' + Math.round(sum) + ' cm.';
+          msg.innerHTML = '<span style="color:red;">R = ' + Math.round(redLength) + ' cm;</span><br> <span style="color:blue;">B = ' + Math.round(blueLength) + ' cm;</span><br> <span style="background-color: yellow;">Y = ' + sum -Math.round(blueLength)-Math.round(redLength)  + ' cm;</span><br> <span style="color:red;">R</span> + <span style="color:blue;">B</span> + <span style="background-color: yellow;">Y</span> = ' + Math.round(sum) + ' cm.';
       }
         });
     </script>
