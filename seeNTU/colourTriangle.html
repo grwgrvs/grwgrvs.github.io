@@ -110,7 +110,7 @@ a:hover{color:#333;text-decoration:none;}
   </head>
   <body>
       <div id="container">
-        <h1>Sperner triangle</h1>
+        <h1>General triangle</h1>
 <h3 class="title">Select Colour:</h3>
 <div id="palette">
   <a href="#" id="red" class="on">Red</a>
@@ -327,35 +327,53 @@ $(document).ready(function()
       var leftbottom = null;
       var rightbottom = null;
       for (let i = 0; i < lefts.length; i++) {
-        x = (Math.floor(Math.random() * 2) == 0);
-        if(x){
+        x = (Math.floor(Math.random() * 3));
+        if(x == 0){
           $("#"+lefts[i]).css("fill","red");
           if (i == 0){ topleft = "red"; }
           if (i == 3){ bottomleft = "red"; }
-        }else{
-            $("#"+lefts[i]).css("fill","blue");
-            if (i == 0){ topleft = "blue"; }
+        }
+        if(x == 1){
+          $("#"+lefts[i]).css("fill","blue");
+          if (i == 0){ topleft = "blue"; }
           if (i == 3){ bottomleft = "blue"; }
         }
-        x = (Math.floor(Math.random() * 2) == 0);
-        if(x){
+        if(x == 2){
+          $("#"+lefts[i]).css("fill","yellow");
+          if (i == 0){ topleft = "yellow"; }
+          if (i == 3){ bottomleft = "yellow"; }
+        }
+        x = (Math.floor(Math.random() * 3));
+        if(x==0){
           $("#"+rights[i]).css("fill","red");
           if (i == 0){ topright = "red"; }
           if (i == 3){ bottomright = "red"; }
-        }else{
+        }
+        if(x==1){
             $("#"+rights[i]).css("fill","yellow");
             if (i == 0){ topright = "yellow"; }
           if (i == 3){ bottomright = "yellow"; }
         }
-        x = (Math.floor(Math.random() * 2) == 0);
-        if(x){
+        if(x==2){
+            $("#"+rights[i]).css("fill","blue");
+            if (i == 0){ topright = "blue"; }
+          if (i == 3){ bottomright = "blue"; }
+        }
+        x = (Math.floor(Math.random() * 3));
+        if(x==0){
           $("#"+bottoms[i]).css("fill","blue");
           if (i == 0){ leftbottom = "blue"; }
           if (i == 3){ rightbottom = "blue"; }
-        }else{
+        }
+        if(x==1){
             $("#"+bottoms[i]).css("fill","yellow");
             if (i == 0){ leftbottom = "yellow"; }
           if (i == 3){ rightbottom = "yellow"; }
+        }
+        if(x==2){
+            $("#"+bottoms[i]).css("fill","red");
+            if (i == 0){ leftbottom = "red"; }
+          if (i == 3){ rightbottom = "red"; }
         }
           
     }
