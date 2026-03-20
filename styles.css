@@ -187,8 +187,7 @@ a.inactive, a.inactive:hover{opacity:.2;border-bottom:2px solid #fff;}
 #menu  ul{background:#fff;margin:0;padding:0;list-style-type:none;text-align:center;display:inline-block;font-size:0.8em;}
 #menu  ul > li{margin:0;padding-right:0.8em;list-style:none;display:-moz-inline-stack;
 display:inline-block;
-/*zoom:1;*/
-position:relative;}
+/*zoom:1;*/}
 #menu  ul li.first{border-left:none;}
 #menu ul li a#drop {display: none;}
 @media screen and (max-width:680px) {
