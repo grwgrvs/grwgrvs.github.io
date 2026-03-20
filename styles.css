@@ -238,7 +238,9 @@ display:inline-block;
 }
 @media screen and (max-width:680px) {
 #menu ul.responsive {
-	position: relative;
+	position: absolute; /* ← Takes it out of the flow */
+  right: 0;           /* ← Align to the right to match your #drop button */
+  top: 0px;
 	border:1px solid #778fbd;
 	-moz-border-right-radius: 5px;
 	-webkit-border-right-radius: 5px;
@@ -247,7 +249,7 @@ display:inline-block;
 	border-bottom-right-radius:5px;
 	border-bottom-left-radius:5px;
 	border-top:none;
-	margin-bottom:-50px;
+	/* margin-bottom:-50px; */
 	background:#fff;
 }
 #rankDiv{ display: none; }
